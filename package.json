@@ -1,0 +1,37 @@
+{
+  "name": "awesome-react-cli",
+  "version": "1.0.0",
+  "description": "This is a boiler plate cli which will work with CRA awesome-react-template",
+  "main": "src/index.js",
+  "bin": {
+    "arnabsutar/awesome-react-cli": "bin/awesome-react-cli",
+    "awesome-react-cli": "bin/awesome-react-cli"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "React",
+    "Boiler",
+    "Plate",
+    "CLI",
+    "awesome-react-template"
+  ],
+  "author": "Arnab Sutar",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "esm": "^3.2.25",
+    "fs-extra": "^9.0.1",
+    "inquirer": "^7.3.3",
+    "replace-in-file": "^6.1.0",
+    "yargs": "^16.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arnabsutar/awesome-react-cli"
+  }
+}
