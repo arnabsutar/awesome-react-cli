@@ -27,7 +27,6 @@ export async function createModule(argv) {
   log(flagFile);
   if (cliUtil.doesExists(flagFile) && cliUtil.checkIfExistingProject()) {
     log(chalk.blue('Going to create module ' + moduleName));
-    log(chalk.blue(moduleTemplatePath), cliUtil.doesExists(moduleTemplatePath));
     let destPath = moduleDestination + cliUtil.getSeparator() + moduleName;
     fse.copySync(moduleTemplatePath, destPath);
     log(chalk.greenBright("Module structure has been created"));
@@ -42,7 +41,6 @@ export async function createModule(argv) {
 
     try {
       let changedFiles = replace.sync(moduleReplaceOption);
-      console.log('Modified files:', changedFiles.join(', '));
     }
     catch (error) {
       console.error('Error occurred:', error);
