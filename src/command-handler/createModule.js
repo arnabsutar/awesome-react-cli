@@ -19,6 +19,8 @@ const apiConfigPath = cliUtil.getCurrentDirectory() + cliUtil.getSeparator() + "
 const routeConfigPath = cliUtil.getCurrentDirectory() + cliUtil.getSeparator() + "src" + cliUtil.getSeparator() + "config" + cliUtil.getSeparator() + "routeConfig.js";
 const menuConfigPath = cliUtil.getCurrentDirectory() + cliUtil.getSeparator() + "src" + cliUtil.getSeparator() + "config" + cliUtil.getSeparator() + "menuConfig.js";
 
+const mobileMenuConfigPath = cliUtil.getCurrentDirectory() + cliUtil.getSeparator() + "src" + cliUtil.getSeparator() + "config" + cliUtil.getSeparator() + "mobileMenuConfig.js";
+
 export async function createModule(argv) {
   const commandName = argv._;
   const moduleName = argv.name;
@@ -51,7 +53,7 @@ export async function createModule(argv) {
       catch (error) {
         console.error('Error occurred:', error);
       }
-
+      log(chalk.green(`Module Structure for ${argv.name} has been created`));
       // update API config
       await updateConfiguration(
         apiConfigPath,
@@ -59,17 +61,18 @@ export async function createModule(argv) {
         `  ...${argv.name}API,`,
       );
       // update route config
-      await updateConfiguration(argv,
+      await updateConfiguration(
         routeConfigPath,
-        `import { ${argv.name}Route } from '../app/modules/${argv.name}';`,
-        `  ...${argv.name}Route,`);
+        `import { ${argv.name}Routes } from '../app/modules/${argv.name}';`,
+        `  ...${argv.name}Routes,`);
       // update menu config
-      await updateConfiguration(argv,
-        routeConfigPath,
+      await updateConfiguration(
+        menuConfigPath,
         `import { ${argv.name}Menus } from '../app/modules/${argv.name}';`,
         `  ...${argv.name}Menus,`);
-      await updateConfiguration(argv,
-        routeConfigPath,
+
+      await updateConfiguration(
+        mobileMenuConfigPath,
         `import { ${argv.name}MobileMenus } from '../app/modules/${argv.name}';`,
         `  ...${argv.name}MobileMenus,`);
 
@@ -88,14 +91,10 @@ export async function createModule(argv) {
 
 async function updateConfiguration(configPath, importStatement, spreadStatement) {
   log();
-  log('Configuration Path : ', chalk.bgBlue(configPath));
-  log('Configuration exists : ', cliUtil.doesExists(configPath));
-
+  log(chalk.green('Updating Configuartion : '), chalk.bgBlue(configPath));
   let updatedLines = await cliUtil.readFileLineByLine(configPath);
-  log(updatedLines);
 
   const basicInformation = cliUtil.getLineNumbers(updatedLines, argv.name);
-  log(basicInformation);
   //check for pre-configured module
   if (basicInformation.updateRequired) {
     const linesForFile = cliUtil.updateLineArray(updatedLines,

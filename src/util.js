@@ -16,12 +16,12 @@ export function checkIfExistingProject() {
   return fs.existsSync(getCurrentDirectory() + path.sep + 'package.json');
 }
 
-export function doesExists(path) {
-  return fs.existsSync(path);
+export function doesExists(filePath) {
+  return fs.existsSync(filePath);
 }
 
-export async function readFileLineByLine(path) {
-  const fileStreamRead = fs.createReadStream(path);
+export async function readFileLineByLine(filePath) {
+  const fileStreamRead = fs.createReadStream(filePath);
 
   const rl = readline.createInterface({
     input: fileStreamRead,
@@ -38,11 +38,10 @@ export async function readFileLineByLine(path) {
   return fileLines;
 }
 
-export function writeFileLineByLine(path, lines) {
-  const fileStreamWrite = fs.createWriteStream(path,);
+export function writeFileLineByLine(filePath, lines) {
+  const fileStreamWrite = fs.createWriteStream(filePath,);
   lines.map(l => {
     fileStreamWrite.write(l + '\n');
-    log(chalk.bgGray(l));
   });
   fileStreamWrite.end();
 }

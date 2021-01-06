@@ -22,7 +22,6 @@ export async function cli(args) {
         // yargs.default('value', 'true');
       },
       handler: (argv) => {
-        console.log(argv);
         createAppHandler(argv);
       }
     })
@@ -38,7 +37,6 @@ export async function cli(args) {
         // yargs.default('value', 'true');
       },
       handler: (argv) => {
-        console.log(argv);
         createModuleHandler(argv);
       }
     })
