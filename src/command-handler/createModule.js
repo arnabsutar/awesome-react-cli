@@ -92,7 +92,7 @@ export async function createModule(argv) {
 
 async function updateConfiguration(configPath, importStatement, spreadStatement) {
   log();
-  log(chalk.green('Updating Configuartion : '), chalk.bgBlue(configPath));
+  log(chalk.green('Updating Configuartion : '), chalk.blue(configPath));
   let updatedLines = await cliUtil.readFileLineByLine(configPath);
 
   const basicInformation = cliUtil.getLineNumbers(updatedLines, argv.name);
