@@ -1,7 +1,7 @@
 const apiConfig = {
-  MOD_DEFAULT: {
-    apiKey: 'MOD_APP_1',
-    endpoint: `${window.SERVER_DATA.apiHost}/MOD_APP_1`,
+  __moduleName__API1: {
+    apiKey: '__moduleName__API1',
+    endpoint: `${window.SERVER_DATA.apiHost}/__moduleName__API1`,
     type: 'GET',
     authenticated: true,
     showLoading: true,

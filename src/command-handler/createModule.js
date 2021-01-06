@@ -37,11 +37,12 @@ export async function createModule(argv) {
     let destPath = moduleDestination + cliUtil.getSeparator() + moduleName;
     if (!cliUtil.doesExists(destPath)) {
       fse.copySync(moduleTemplatePath, destPath);
-
+      log(destPath + cliUtil.getSeparator() + "config" + cliUtil.getSeparator() + "apiConfig.js");
       // update the content of the index.js file
       const moduleReplaceOption = {
         files: [
-          destPath + cliUtil.getSeparator() + "index.js"
+          destPath + cliUtil.getSeparator() + "index.js",
+          destPath + cliUtil.getSeparator() + "config" + cliUtil.getSeparator() + "apiConfig.js",
         ],
         from: /__moduleName__/g,
         to: moduleName,
