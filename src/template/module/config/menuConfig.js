@@ -1,3 +1,3 @@
-const desktopMenus = [];
+const menus = [];
 const mobileMenus = [];
 export { desktopMenus, mobileMenus };

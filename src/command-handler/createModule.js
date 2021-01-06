@@ -1,3 +1,5 @@
+import { argv } from 'yargs';
+
 const chalk = require('chalk');
 // const fs = require('fs');
 // const readline = require('readline');
@@ -51,11 +53,25 @@ export async function createModule(argv) {
       }
 
       // update API config
-      await updateApiConfiguration(argv, apiConfigPath);
+      await updateConfiguration(
+        apiConfigPath,
+        `import { ${argv.name}API } from '../app/modules/${argv.name}';`,
+        `  ...${argv.name}API,`,
+      );
       // update route config
-      await updateRouteConfiguration(argv, routeConfigPath);
+      await updateConfiguration(argv,
+        routeConfigPath,
+        `import { ${argv.name}Route } from '../app/modules/${argv.name}';`,
+        `  ...${argv.name}Route,`);
       // update menu config
-      await updateMenuConfiguration(argv, menuConfigPath);
+      await updateConfiguration(argv,
+        routeConfigPath,
+        `import { ${argv.name}Menus } from '../app/modules/${argv.name}';`,
+        `  ...${argv.name}Menus,`);
+      await updateConfiguration(argv,
+        routeConfigPath,
+        `import { ${argv.name}MobileMenus } from '../app/modules/${argv.name}';`,
+        `  ...${argv.name}MobileMenus,`);
 
       log(chalk.bgGreen("Success"), chalk.greenBright("Module structure has been created"));
     }
@@ -70,82 +86,29 @@ export async function createModule(argv) {
 
 }
 
-async function updateApiConfiguration(args, configPath) {
+async function updateConfiguration(configPath, importStatement, spreadStatement) {
   log();
-  log('API Configuration Path : ', chalk.bgBlue(configPath));
-  log('API Configuration exists : ', cliUtil.doesExists(configPath));
+  log('Configuration Path : ', chalk.bgBlue(configPath));
+  log('Configuration exists : ', cliUtil.doesExists(configPath));
 
-
-  let importStatementStarted = false;
-  let importStatementIncluded = false;
-  let apiParsingStarted = false;
-  let updateRequired = true;
   let updatedLines = await cliUtil.readFileLineByLine(configPath);
   log(updatedLines);
-  updatedLines.map(l => {
-    if (l.indexOf(`${args.name}API`) > -1) {
-      updateRequired = false;
-    }
-  }
-  );
+
+  const basicInformation = cliUtil.getLineNumbers(updatedLines, argv.name);
+  log(basicInformation);
   //check for pre-configured module
-  if (updateRequired) {
-
-    const linesForFile = [];
-    updatedLines.map(line => {
-
-      // update the import statement
-      if (line.indexOf('import') > -1) {
-        importStatementStarted = true;
-      }
-      if (importStatementStarted
-        && line.indexOf("import") < 0
-        && !importStatementIncluded) {
-        // Add the module import as line
-        linesForFile.push(`import { ${args.name}API } from '../app/modules/${args.name}';`);
-        linesForFile.push('');
-        importStatementStarted = false;
-        importStatementIncluded = true;
-        return;
-      }
-
-      // update API spreading
-      if (line.replace(" ", "").indexOf("constAPI") > -1) {
-        log("Got the api line");
-        apiParsingStarted = true;
-        linesForFile.push(`// Updated for module ${args.name} and config object is ${args.name}API`);
-      }
-
-      if (apiParsingStarted && line.indexOf("}") > -1) {
-        apiParsingStarted = false;
-        linesForFile.push(`  ...${args.name}API,`);
-        linesForFile.push(line);
-        return;
-      }
-      linesForFile.push(line);
-    })
-
-
+  if (basicInformation.updateRequired) {
+    const linesForFile = cliUtil.updateLineArray(updatedLines,
+      importStatement,
+      spreadStatement,
+      basicInformation
+    );
     // write to file and replace all
     cliUtil.writeFileLineByLine(configPath, linesForFile);
   }
   else {
-    log(chalk.yellow(`Warning: API already configured for the module ${args.name}`));
+    log(chalk.yellow(`Warning: ${configPath} already configured for the module ${args.name}`));
   }
 
-  log();
-}
-
-function updateRouteConfiguration(args, configPath) {
-  log();
-  log('Route Configuration Path : ', chalk.bgBlue(configPath));
-  log('Route Configuration exists : ', cliUtil.doesExists(configPath));
-  log();
-}
-
-function updateMenuConfiguration(args, configPath) {
-  log();
-  log('Menu Configuration Path : ', chalk.bgBlue(configPath));
-  log('Menu Configuration exists : ', cliUtil.doesExists(configPath));
   log();
 }

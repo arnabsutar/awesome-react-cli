@@ -46,3 +46,44 @@ export function writeFileLineByLine(path, lines) {
   });
   fileStreamWrite.end();
 }
+
+export function getLineNumbers(lines, moduleName) {
+  let updateRequired = true;
+  let lastImportLineNumber = -1;
+  let lastSpredLineNumber = -1;
+  lines.map((l, index) => {
+    if (l.indexOf(`${moduleName}API`) > -1) {
+      updateRequired = false;
+    }
+    if (l.indexOf('import') > -1) {
+      lastImportLineNumber = index;
+    }
+    if (l.indexOf('...') > -1) {
+      lastSpredLineNumber = index;
+    }
+  }
+  );
+  return {
+    updateRequired,
+    lastImportLineNumber,
+    lastSpredLineNumber,
+  }
+}
+
+export function updateLineArray(lines, importStatement, spreadStatement, lineInformation) {
+
+  if (lineInformation.updateRequired) {
+    lineInformation.lastImportLineNumber++;
+    lineInformation.lastSpredLineNumber++;
+    lines = insertAt(lines, lineInformation.lastImportLineNumber, importStatement);
+    lineInformation.lastSpredLineNumber++;
+    lines = insertAt(lines, lineInformation.lastSpredLineNumber, spreadStatement);
+  }
+
+  return lines;
+}
+
+export function insertAt(array, index, ...elements) {
+  array.splice(index, 0, ...elements);
+  return array;
+}
