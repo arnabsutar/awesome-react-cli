@@ -51,7 +51,7 @@ export function getLineNumbers(lines, moduleName) {
   let lastImportLineNumber = -1;
   let lastSpredLineNumber = -1;
   lines.map((l, index) => {
-    if (l.indexOf(`${moduleName}API`) > -1) {
+    if (l.indexOf(`${moduleName}`) > -1) {
       updateRequired = false;
     }
     if (l.indexOf('import') > -1) {

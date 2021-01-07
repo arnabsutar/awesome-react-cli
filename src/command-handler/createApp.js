@@ -11,7 +11,7 @@ const existingPackageFile = cliUtil.checkIfExistingProject();
 export async function createAppHandler(argv) {
   const commandName = argv._;
   const appName = argv.name;
-  const templateName = argv.template;
+  let templateName = argv.template;
   log()
   log(chalk.blueBright(`Executing command : ${commandName}`));
   log();

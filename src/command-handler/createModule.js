@@ -96,6 +96,7 @@ async function updateConfiguration(configPath, importStatement, spreadStatement)
   let updatedLines = await cliUtil.readFileLineByLine(configPath);
 
   const basicInformation = cliUtil.getLineNumbers(updatedLines, argv.name);
+  log(chalk.green('Update Required : '), basicInformation.updateRequired);
   //check for pre-configured module
   if (basicInformation.updateRequired) {
     const linesForFile = cliUtil.updateLineArray(updatedLines,
