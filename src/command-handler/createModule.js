@@ -57,22 +57,26 @@ export async function createModule(argv) {
       log(chalk.green(`Module Structure for ${argv.name} has been created`));
       // update API config
       await updateConfiguration(
+        argv.name,
         apiConfigPath,
         `import { ${argv.name}API } from '../app/modules/${argv.name}';`,
         `  ...${argv.name}API,`,
       );
       // update route config
       await updateConfiguration(
+        argv.name,
         routeConfigPath,
         `import { ${argv.name}Routes } from '../app/modules/${argv.name}';`,
         `  ...${argv.name}Routes,`);
       // update menu config
       await updateConfiguration(
+        argv.name,
         menuConfigPath,
         `import { ${argv.name}Menus } from '../app/modules/${argv.name}';`,
         `  ...${argv.name}Menus,`);
 
       await updateConfiguration(
+        argv.name,
         mobileMenuConfigPath,
         `import { ${argv.name}MobileMenus } from '../app/modules/${argv.name}';`,
         `  ...${argv.name}MobileMenus,`);
@@ -90,12 +94,12 @@ export async function createModule(argv) {
 
 }
 
-async function updateConfiguration(configPath, importStatement, spreadStatement) {
+async function updateConfiguration(moduleName, configPath, importStatement, spreadStatement) {
   log();
   log(chalk.green('Updating Configuartion : '), chalk.blue(configPath));
   let updatedLines = await cliUtil.readFileLineByLine(configPath);
 
-  const basicInformation = cliUtil.getLineNumbers(updatedLines, argv.name);
+  const basicInformation = cliUtil.getLineNumbers(updatedLines, moduleName);
   log(chalk.green('Update Required : '), basicInformation.updateRequired);
   //check for pre-configured module
   if (basicInformation.updateRequired) {
@@ -108,7 +112,7 @@ async function updateConfiguration(configPath, importStatement, spreadStatement)
     cliUtil.writeFileLineByLine(configPath, linesForFile);
   }
   else {
-    log(chalk.yellow(`Warning: ${configPath} already configured for the module ${args.name}`));
+    log(chalk.keyword('orange')(`Warning: ${configPath} already configured for the module ${moduleName}`));
   }
 
   log();
