@@ -2,7 +2,7 @@
   "name": "awesome-react-cli",
   "version": "1.0.0",
   "description": "This is a boiler plate cli which will work with CRA awesome-react-template",
-  "main": "src/index.js",
+  "main": "bin/awesome-react-cli",
   "bin": {
     "arnabsutar/awesome-react-cli": "bin/awesome-react-cli",
     "awesome-react-cli": "bin/awesome-react-cli"

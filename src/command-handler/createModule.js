@@ -15,7 +15,7 @@ const moduleDestination = cliUtil.getCurrentDirectory()
   + "app"
   + cliUtil.getSeparator()
   + "modules";
-const apiConfigPath = cliUtil.getCurrentDirectory() + cliUtil.getSeparator() + "src" + cliUtil.getSeparator() + "config" + cliUtil.getSeparator() + "apiConfig.js";
+const sagaConfigPath = cliUtil.getCurrentDirectory() + cliUtil.getSeparator() + "src" + cliUtil.getSeparator() + "stateManagement" + cliUtil.getSeparator() + "appRootSaga.js";
 const routeConfigPath = cliUtil.getCurrentDirectory() + cliUtil.getSeparator() + "src" + cliUtil.getSeparator() + "config" + cliUtil.getSeparator() + "routeConfig.js";
 const menuConfigPath = cliUtil.getCurrentDirectory() + cliUtil.getSeparator() + "src" + cliUtil.getSeparator() + "config" + cliUtil.getSeparator() + "menuConfig.js";
 
@@ -42,7 +42,13 @@ export async function createModule(argv) {
       const moduleReplaceOption = {
         files: [
           destPath + cliUtil.getSeparator() + "index.js",
+          destPath + cliUtil.getSeparator() + "moduleConstants.js",
           destPath + cliUtil.getSeparator() + "config" + cliUtil.getSeparator() + "apiConfig.js",
+          destPath + cliUtil.getSeparator() + "config" + cliUtil.getSeparator() + "menuConfig.js",
+          destPath + cliUtil.getSeparator() + "config" + cliUtil.getSeparator() + "routeConfig.js",
+          destPath + cliUtil.getSeparator() + "redux" + cliUtil.getSeparator() + "index.js",
+          destPath + cliUtil.getSeparator() + "redux" + cliUtil.getSeparator() + "actions" + cliUtil.getSeparator() + "actionTypes.js",
+          destPath + cliUtil.getSeparator() + "redux" + cliUtil.getSeparator() + "effects" + cliUtil.getSeparator() + "moduleWatcher.js",
         ],
         from: /__moduleName__/g,
         to: moduleName,
@@ -58,9 +64,9 @@ export async function createModule(argv) {
       // update API config
       await updateConfiguration(
         argv.name,
-        apiConfigPath,
-        `import { ${argv.name}API } from '../app/modules/${argv.name}';`,
-        `  ...${argv.name}API,`,
+        sagaConfigPath,
+        `import { ${argv.name}Watcher } from '../app/modules/${argv.name}';`,
+        `, ${argv.name}Watcher()`,
       );
       // update route config
       await updateConfiguration(

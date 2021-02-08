@@ -50,6 +50,7 @@ export function getLineNumbers(lines, moduleName) {
   let updateRequired = true;
   let lastImportLineNumber = -1;
   let lastSpredLineNumber = -1;
+  let lastEndOfArrayLineNumber = -1;
   lines.map((l, index) => {
     if (l.indexOf(`${moduleName}`) > -1) {
       updateRequired = false;
@@ -60,23 +61,50 @@ export function getLineNumbers(lines, moduleName) {
     if (l.indexOf('...') > -1) {
       lastSpredLineNumber = index;
     }
+    if (l.indexOf(']') > -1) {
+      lastEndOfArrayLineNumber = index;
+    }
   }
   );
   return {
     updateRequired,
     lastImportLineNumber,
     lastSpredLineNumber,
+    lastEndOfArrayLineNumber,
   }
 }
 
 export function updateLineArray(lines, importStatement, spreadStatement, lineInformation) {
 
+  let disableArrayModification = false;
   if (lineInformation.updateRequired) {
     lineInformation.lastImportLineNumber++;
-    lineInformation.lastSpredLineNumber++;
+    if (lineInformation.lastSpredLineNumber > -1) {
+      lineInformation.lastSpredLineNumber++;
+      disableArrayModification = true;
+    }
+    if (lineInformation.lastEndOfArrayLineNumber > -1) {
+      lineInformation.lastEndOfArrayLineNumber++;
+    }
     lines = insertAt(lines, lineInformation.lastImportLineNumber, importStatement);
-    lineInformation.lastSpredLineNumber++;
-    lines = insertAt(lines, lineInformation.lastSpredLineNumber, spreadStatement);
+    if (lineInformation.lastSpredLineNumber > -1) {
+      lineInformation.lastSpredLineNumber++;
+      lines = insertAt(lines, lineInformation.lastSpredLineNumber, spreadStatement);
+    }
+    if (!disableArrayModification && lineInformation.lastEndOfArrayLineNumber > -1) {
+      // update the line
+      let lineToBeUpdated = lines[lineInformation.lastEndOfArrayLineNumber];
+      console.log('>> Line with ] : ', lineToBeUpdated);
+      console.log(">> Spread Text : ", spreadStatement);
+      const splittedText = lineToBeUpdated.split(']');
+      console.log(">> Splitted Text : ", splittedText);
+
+      splittedText[0] = splittedText[0] + ", " + spreadStatement;
+      console.log("Modified text : ", splittedText[0]);
+      lines[lineInformation.lastEndOfArrayLineNumber] = splittedText.join("]");
+      // lines = insertAt(lines, lineInformation.lastSpredLineNumber, spreadStatement);
+
+    }
   }
 
   return lines;
