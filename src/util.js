@@ -94,13 +94,8 @@ export function updateLineArray(lines, importStatement, spreadStatement, lineInf
     if (!disableArrayModification && lineInformation.lastEndOfArrayLineNumber > -1) {
       // update the line
       let lineToBeUpdated = lines[lineInformation.lastEndOfArrayLineNumber];
-      console.log('>> Line with ] : ', lineToBeUpdated);
-      console.log(">> Spread Text : ", spreadStatement);
       const splittedText = lineToBeUpdated.split(']');
-      console.log(">> Splitted Text : ", splittedText);
-
       splittedText[0] = splittedText[0] + spreadStatement;
-      console.log("Modified text : ", splittedText[0]);
       lines[lineInformation.lastEndOfArrayLineNumber] = splittedText.join("]");
       // lines = insertAt(lines, lineInformation.lastSpredLineNumber, spreadStatement);
 
