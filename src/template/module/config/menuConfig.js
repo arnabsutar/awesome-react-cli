@@ -6,15 +6,15 @@
  * @IssueID NA
  */
 const menus = [{
-  id: "__moduleName__",
+  id: '__moduleName__',
   sequence: 1,
   icon: null,
-  label: "__moduleName__",
-  url: "#",
+  label: '__moduleName__',
+  url: '#',
   action: null,
-  aclKey: "__moduleName__",
+  aclKey: '__moduleName__',
   acl: true,
-  subMenu: []
+  subMenu: [],
 }];
 const mobileMenus = menus;
 export { menus, mobileMenus };

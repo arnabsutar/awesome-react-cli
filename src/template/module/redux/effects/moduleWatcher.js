@@ -7,7 +7,7 @@
  */
 
 function* moduleWatcher() {
-
+  yield true;
 }
 
 export default moduleWatcher;

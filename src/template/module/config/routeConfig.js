@@ -7,6 +7,6 @@
  */
 export const routeConstants = {
   __moduleName__Home: '/__moduleName__/home',
-}
+};
 export const routeConfig = [];
 export default routeConfig;
