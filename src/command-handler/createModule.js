@@ -79,13 +79,13 @@ export async function createModule(argv) {
         argv.name,
         menuConfigPath,
         `import { ${argv.name}Menus } from '../app/modules/${argv.name}';`,
-        `  ...${argv.name}Menus,`);
+        `  ...${argv.name}Menus(),`);
 
       await updateConfiguration(
         argv.name,
         mobileMenuConfigPath,
         `import { ${argv.name}MobileMenus } from '../app/modules/${argv.name}';`,
-        `  ...${argv.name}MobileMenus,`);
+        `  ...${argv.name}MobileMenus(),`);
 
       log(chalk.bgGreen("Success"), chalk.greenBright("Module structure has been created"));
     }

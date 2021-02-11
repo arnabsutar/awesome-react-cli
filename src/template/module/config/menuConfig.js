@@ -5,7 +5,7 @@
  * @CreatedOn 08 February, 2021 16:39:31
  * @IssueID NA
  */
-const menus = [{
+const menus = () => [{
   id: '__moduleName__',
   sequence: 1,
   icon: null,
