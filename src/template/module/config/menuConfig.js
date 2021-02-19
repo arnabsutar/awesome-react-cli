@@ -8,7 +8,7 @@
 const menus = () => [{
   id: '__moduleName__',
   sequence: 1,
-  icon: null,
+  icon: 'blog',
   label: '__moduleName__',
   url: '#',
   action: null,
