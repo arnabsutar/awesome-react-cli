@@ -1,6 +1,6 @@
 {
   "name": "awesome-react-cli",
-  "version": "0.0.1c-beta",
+  "version": "0.0.1-d-beta",
   "description": "This is a boiler plate cli which will work with CRA awesome-react-template",
   "main": "bin/awesome-react-cli",
   "bin": {

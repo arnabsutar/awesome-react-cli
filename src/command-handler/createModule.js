@@ -20,8 +20,8 @@ const routeConfigPath = cliUtil.getCurrentDirectory() + cliUtil.getSeparator() +
 const menuConfigPath = cliUtil.getCurrentDirectory() + cliUtil.getSeparator() + "src" + cliUtil.getSeparator() + "config" + cliUtil.getSeparator() + "menuConfig.js";
 
 const mobileMenuConfigPath = cliUtil.getCurrentDirectory() + cliUtil.getSeparator() + "src" + cliUtil.getSeparator() + "config" + cliUtil.getSeparator() + "mobileMenuConfig.js";
-const englishConfigPath = cliUtil.getCurrentDirectory() + cliUtil.getSeparator() + "src" + cliUtil.getSeparator() + "i18n" + cliUtil.getSeparator() + "languages" + cliUtil.getSeparator() + "english.js";
-const frenchConfigPath = cliUtil.getCurrentDirectory() + cliUtil.getSeparator() + "src" + cliUtil.getSeparator() + "i18n" + cliUtil.getSeparator() + "languages" + cliUtil.getSeparator() + "french.js";
+const englishConfigPath = cliUtil.getCurrentDirectory() + cliUtil.getSeparator() + "src" + cliUtil.getSeparator() + "app" + cliUtil.getSeparator() + "common" + cliUtil.getSeparator() + "i18n" + cliUtil.getSeparator() + "languages" + cliUtil.getSeparator() + "english.js";
+const frenchConfigPath = cliUtil.getCurrentDirectory() + cliUtil.getSeparator() + "src" + cliUtil.getSeparator() + "app" + cliUtil.getSeparator() + "common" + cliUtil.getSeparator() + "i18n" + cliUtil.getSeparator() + "languages" + cliUtil.getSeparator() + "french.js";
 
 export async function createModule(argv) {
   const commandName = argv._;
@@ -45,7 +45,7 @@ export async function createModule(argv) {
         files: [
           destPath + cliUtil.getSeparator() + "index.js",
           destPath + cliUtil.getSeparator() + "moduleConstants.js",
-          destPath + cliUtil.getSeparator() + "i18n" + cliUtil.getSeparator() + "english.js",
+          destPath + cliUtil.getSeparator() + "i18n" + cliUtil.getSeparator() + "i18n" + cliUtil.getSeparator() + "english.js",
           destPath + cliUtil.getSeparator() + "i18n" + cliUtil.getSeparator() + "french.js",
           destPath + cliUtil.getSeparator() + "config" + cliUtil.getSeparator() + "apiConfig.js",
           destPath + cliUtil.getSeparator() + "config" + cliUtil.getSeparator() + "menuConfig.js",
@@ -69,14 +69,14 @@ export async function createModule(argv) {
       await updateConfiguration(
         argv.name,
         englishConfigPath,
-        `import ${argv.name}Resources from '../../app/modules/${argv.name}/i18n/english';`,
+        `import ${argv.name}Resources from '../../../modules/${argv.name}/i18n/english';`,
         `    ...${argv.name}Resources,`,
       );
       // update french localization
       await updateConfiguration(
         argv.name,
         frenchConfigPath,
-        `import ${argv.name}Resources from '../../app/modules/${argv.name}/i18n/french';`,
+        `import ${argv.name}Resources from '../../../modules/${argv.name}/i18n/french';`,
         `    ...${argv.name}Resources,`,
       );
 
