@@ -20,6 +20,8 @@ const routeConfigPath = cliUtil.getCurrentDirectory() + cliUtil.getSeparator() +
 const menuConfigPath = cliUtil.getCurrentDirectory() + cliUtil.getSeparator() + "src" + cliUtil.getSeparator() + "config" + cliUtil.getSeparator() + "menuConfig.js";
 
 const mobileMenuConfigPath = cliUtil.getCurrentDirectory() + cliUtil.getSeparator() + "src" + cliUtil.getSeparator() + "config" + cliUtil.getSeparator() + "mobileMenuConfig.js";
+const englishConfigPath = cliUtil.getCurrentDirectory() + cliUtil.getSeparator() + "src" + cliUtil.getSeparator() + "i18n" + cliUtil.getSeparator() + "languages" + cliUtil.getSeparator() + "english.js";
+const frenchConfigPath = cliUtil.getCurrentDirectory() + cliUtil.getSeparator() + "src" + cliUtil.getSeparator() + "i18n" + cliUtil.getSeparator() + "languages" + cliUtil.getSeparator() + "french.js";
 
 export async function createModule(argv) {
   const commandName = argv._;
@@ -43,6 +45,8 @@ export async function createModule(argv) {
         files: [
           destPath + cliUtil.getSeparator() + "index.js",
           destPath + cliUtil.getSeparator() + "moduleConstants.js",
+          destPath + cliUtil.getSeparator() + "i18n" + cliUtil.getSeparator() + "english.js",
+          destPath + cliUtil.getSeparator() + "i18n" + cliUtil.getSeparator() + "french.js",
           destPath + cliUtil.getSeparator() + "config" + cliUtil.getSeparator() + "apiConfig.js",
           destPath + cliUtil.getSeparator() + "config" + cliUtil.getSeparator() + "menuConfig.js",
           destPath + cliUtil.getSeparator() + "config" + cliUtil.getSeparator() + "routeConfig.js",
@@ -61,6 +65,21 @@ export async function createModule(argv) {
         console.error('Error occurred:', error);
       }
       log(chalk.green(`Module Structure for ${argv.name} has been created`));
+      // update english localization
+      await updateConfiguration(
+        argv.name,
+        englishConfigPath,
+        `import ${argv.name}Resources from '../../app/modules/${argv.name}/i18n/english';`,
+        `...${argv.name}Resources,`,
+      );
+      // update french localization
+      await updateConfiguration(
+        argv.name,
+        frenchConfigPath,
+        `import ${argv.name}Resources from '../../app/modules/${argv.name}/i18n/french';`,
+        `...${argv.name}Resources,`,
+      );
+
       // update API config
       await updateConfiguration(
         argv.name,
@@ -68,6 +87,7 @@ export async function createModule(argv) {
         `import { ${argv.name}Watcher } from '../app/modules/${argv.name}';`,
         `, ${argv.name}Watcher()`,
       );
+
       // update route config
       await updateConfiguration(
         argv.name,
