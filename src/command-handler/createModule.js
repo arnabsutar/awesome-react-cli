@@ -70,14 +70,14 @@ export async function createModule(argv) {
         argv.name,
         englishConfigPath,
         `import ${argv.name}Resources from '../../app/modules/${argv.name}/i18n/english';`,
-        `...${argv.name}Resources,`,
+        `    ...${argv.name}Resources,`,
       );
       // update french localization
       await updateConfiguration(
         argv.name,
         frenchConfigPath,
         `import ${argv.name}Resources from '../../app/modules/${argv.name}/i18n/french';`,
-        `...${argv.name}Resources,`,
+        `    ...${argv.name}Resources,`,
       );
 
       // update API config
