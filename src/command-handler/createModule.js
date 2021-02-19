@@ -45,7 +45,7 @@ export async function createModule(argv) {
         files: [
           destPath + cliUtil.getSeparator() + "index.js",
           destPath + cliUtil.getSeparator() + "moduleConstants.js",
-          destPath + cliUtil.getSeparator() + "i18n" + cliUtil.getSeparator() + "i18n" + cliUtil.getSeparator() + "english.js",
+          destPath + cliUtil.getSeparator() + "i18n" + cliUtil.getSeparator() + "english.js",
           destPath + cliUtil.getSeparator() + "i18n" + cliUtil.getSeparator() + "french.js",
           destPath + cliUtil.getSeparator() + "config" + cliUtil.getSeparator() + "apiConfig.js",
           destPath + cliUtil.getSeparator() + "config" + cliUtil.getSeparator() + "menuConfig.js",
