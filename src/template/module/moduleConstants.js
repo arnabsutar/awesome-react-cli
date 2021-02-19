@@ -6,7 +6,7 @@
  * @IssueID Issue Detail
  */
 export const routeConstants = {
-  ROUTE_HOME: "__moduleName__"
+  ROUTE_HOME: "__moduleName__/home"
 }
 
 /**
@@ -17,15 +17,8 @@ export const aclKeyConstanst = {
 }
 
 /**
- * Constants for statci content
+ * Constants for static content
  */
 export const staticLabelKeys = {
 
-}
-
-/**
- * Route Constants
- */
-export const routeConstants = {
-  __moduleName__Home: '/__moduleName__/home',
 };
