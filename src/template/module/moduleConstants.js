@@ -6,15 +6,15 @@
  * @IssueID Issue Detail
  */
 export const routeConstants = {
-  ROUTE_HOME: "__moduleName__/home"
-}
+  ROUTE_HOME: '__moduleName__/home',
+};
 
 /**
  * Constants for ACL Keys
  */
 export const aclKeyConstanst = {
 
-}
+};
 
 /**
  * Constants for static content
