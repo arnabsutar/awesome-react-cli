@@ -12,7 +12,7 @@ const menus = () => [{
   label: '__moduleName__',
   url: '#',
   action: null,
-  aclKey: '__moduleName__',
+  aclKey: ['__moduleName__'],
   acl: true,
   subMenu: [],
 }];
